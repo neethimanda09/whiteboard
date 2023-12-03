@@ -4,12 +4,16 @@ import React, {useRef, useEffect, useState} from 'react';
 
 const Board = () => {
   
-  const socket = io('http://localhost:5000');
+  //const socket = io('http://localhost:5000');
+  
+  const socket = io('https://whiteboardserver-ia2e.onrender.com');
+
+
   
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const [drawingData, setDrawingData] = useState([]);
-  const broadcastChannel = new BroadcastChannel('drawingDataChannel');
+ 
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -114,10 +118,11 @@ const Board = () => {
   window.addEventListener('resize', onResize, false);
   onResize();
   
+  
 
   socket.on('init', (data) => {
-    setDrawingData(data);
-    data.forEach((item) => {
+   
+      drawingData.forEach((item) => {
       const w = canvas.width;
       const h = canvas.height;
       draw(item.x0 * w, item.y0 * h, item.x1 * w, item.y1 * h, item.color);
@@ -134,13 +139,14 @@ const Board = () => {
 
 
   return () => {
+    
     socket.off('init');
     socket.off('drawing');
 
   };
 
   },[]);
-  
+ 
     return(
       <div>
         <canvas ref={canvasRef} className="whiteboard" />
