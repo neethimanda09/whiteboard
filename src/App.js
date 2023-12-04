@@ -1,10 +1,10 @@
 
 import './App.css';
 import Board from './WhiteBoard/Board';
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 
 
-function App(props) {
+function App() {
   
   return (
     <div className="App">
